@@ -5,85 +5,92 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # STATIC settings
 STATIC_URL = '/static/'
-
-# Добавляем папку для статичных файлов в проекте
-STATICFILES_DIRS = [ BASE_DIR / 'static' , ] 
+STATICFILES_DIRS = [BASE_DIR / 'static',]
 
 # Прочие настройки
 SECRET_KEY = 'django-insecure-3@l&wu*-kppk%-j3)1+@#q&ye@-rfn=8d@l%d^$a@%m)3)7*4s'
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+CSRF_FAILURE_VIEW = 'pages.views.csrf_failure_view'
 
 INSTALLED_APPS = [
-'django.contrib.admin',
-'django.contrib.auth',
-'django.contrib.contenttypes',
-'django.contrib.sessions',
-'django.contrib.messages',
-'django.contrib.staticfiles',
-'pages',
-'blog',
-    'django_bootstrap5',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'pages',
+    'blog',
+    'django_bootstrap5'
 ]
 
 MIDDLEWARE = [
-'django.middleware.security.SecurityMiddleware',
-'django.contrib.sessions.middleware.SessionMiddleware',
-'django.middleware.common.CommonMiddleware',
-'django.middleware.csrf.CsrfViewMiddleware',
-'django.contrib.auth.middleware.AuthenticationMiddleware',
-'django.contrib.messages.middleware.MessageMiddleware',
-'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'blogicum.urls'
 
-TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+TEMPLATES_DIR = BASE_DIR / 'templates'
 
 TEMPLATES = [
-{
-'BACKEND': 'django.template.backends.django.DjangoTemplates',
-'DIRS': [TEMPLATES_DIR],
-'APP_DIRS': True,
-'OPTIONS': {
-'context_processors': [
-'django.template.context_processors.debug',
-'django.template.context_processors.request',
-'django.contrib.auth.context_processors.auth',
-'django.contrib.messages.context_processors.messages',
-],
-},
-},
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [TEMPLATES_DIR],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
 ]
 
 WSGI_APPLICATION = 'blogicum.wsgi.application'
 
 DATABASES = {
-'default': {
-'ENGINE': 'django.db.backends.sqlite3',
-'NAME': BASE_DIR / 'db.sqlite3',
-}
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
-{'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-{'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-{'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-{'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-LANGUAGE_CODE = 'ru-RU'
-TIME_ZONE = 'Europe/Moscow'
+# Настройки локализации
+LANGUAGE_CODE = 'ru-RU'  # Русский язык
+TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-LANGUAGES = [
-('ru', 'Russian'),
-('en', 'English'),
-]
+# Путь для хранения файлов переводов
 LOCALE_PATHS = [
-os.path.join(BASE_DIR, 'locale'),  # Путь к директории с переводами
+    BASE_DIR / 'locale',
 ]
+
+# Медиафайлы
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+LOGIN_URL = '/auth/login/'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# В конец файла settings.py
+LOGIN_REDIRECT_URL = '/'  # После логина — на главную
+LOGOUT_REDIRECT_URL = '/'  # После логаута — на главную
